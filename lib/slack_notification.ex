@@ -32,6 +32,6 @@ defmodule SlackNotification do
       ]
     }
 
-    spawn(__MODULE__, :notify!, [attachments])
+    if config()[:enabled] != false, do: spawn(__MODULE__, :notify!, [attachments])
   end
 end

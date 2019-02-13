@@ -56,8 +56,3 @@ to disable the actual push (in test environment for instance), you can disable i
 ```elixir
 config :slack_notification, enabled: false
 ```
-
-
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at [https://hexdocs.pm/slack_notification](https://hexdocs.pm/slack_notification).

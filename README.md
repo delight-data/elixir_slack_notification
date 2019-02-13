@@ -1,37 +1,42 @@
 # SlackNotification
 
-**TODO: Add description**
+A simple wrapper to asynchronously push slack notifications wit attachement generated from an elixir map with [error, warn info, success] level and color.
 
 ## Installation
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `slack_notification` to your list of dependencies in `mix.exs`:
+Add to your list of dependencies in `mix.exs`:
 
 ```elixir
 def deps do
   [
-    {:slack_notification, git: "git://github.com/delight-data/elixir_slack_notification.git", branch: "master"}
+    {:slack_notification, git: "git://github.com/delight-data/elixir_slack_notification.git", tag: "v1.0.1"}
   ]
 end
 ```
 
-configure:
-
-```elixir
-config :slack_notification, url: get_env.("SLACK_WEBHOOK_URL")
-```
-
-usage:
+## usage:
 
 ```elixir
   SlackNotification.notify(
     :info,
-    "Wonderful notification",
+    "Wonderful notification title",
     %{
       size: 12,
       name: "george"
     }
   )
+```
+
+### configuration:
+
+```elixir
+config :slack_notification, url: get_env.("SLACK_WEBHOOK_URL")
+```
+
+to disable the actual push (in test environment for instance), you can disable it:
+
+```elixir
+config :slack_notification, enabled: false
 ```
 
 

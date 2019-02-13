@@ -19,7 +19,11 @@ end
 With:
 
 ```elixir
-  SlackNotification.notify(:info,"User `john@delight-data.com` created an account", %{id: "01D3KF1K6SSZBMKXQ5NGQGX23M"})
+  SlackNotification.notify(
+    :info,
+    "User `john@delight-data.com` created an account", 
+    %{id: "01D3KF1K6SSZBMKXQ5NGQGX23M"}
+  )
 ```
 
 You will receive:
@@ -29,7 +33,11 @@ You will receive:
 or with:
 
 ```elixir
-SlackNotification.notify(:error,"User `john@delight-data.com` tried to hack you !", %{id: "01D3KF1K6SSZBMKXQ5NGQGX23M", method: "the worst one!"})
+  SlackNotification.notify(
+    :error,
+    "User `john@delight-data.com` tried to hack you !",
+    %{id: "01D3KF1K6SSZBMKXQ5NGQGX23M", method: "the worst one!"}
+  )
 ```
 
 You will receive:

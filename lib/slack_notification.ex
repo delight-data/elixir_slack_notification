@@ -22,9 +22,12 @@ defmodule SlackNotification do
   def process_request_headers(_headers), do: [{"Content-type", "application/json"}]
   def process_request_options(options), do: options ++ @default_options
   def process_request_body(body), do: body |> Poison.encode!()
-  def notify!(attachments), do: post(config()[:url], attachments)
 
-  def notify(level, text, context \\ %{}) do
+  def notify!(url, attachments), do: if(config()[:enabled] != false, do: post(url, attachments))
+
+  def notify(level, text, context \\ %{}), do: notify_channel(:default, level, text, context)
+
+  def notify_channel(channel, level, text, context \\ %{}) do
     attachments = %{
       text: text,
       attachments: [
@@ -36,6 +39,16 @@ defmodule SlackNotification do
       ]
     }
 
-    if config()[:enabled] != false, do: spawn(__MODULE__, :notify!, [attachments])
+    channel_url = url(channel)
+    unless channel_url, do: raise("Unconfigured url for channel #{channel}")
+
+    if config()[:async] != false do
+      spawn(__MODULE__, :notify!, [channel_url, attachments])
+    else
+      notify!(channel_url, attachments)
+    end
   end
+
+  defp url(:default), do: config()[:url]
+  defp url(channel), do: config()[:channels][channel]
 end

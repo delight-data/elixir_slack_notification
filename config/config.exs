@@ -21,6 +21,14 @@ use Mix.Config
 #     config :logger, level: :info
 #
 
+# Slack notifications
+config :slack_notification,
+  async: false,
+  url: "<insert_an_url_of_your_for_unit_test>",
+  channels: %{
+    special: "<insert_an_url_of_your_for_unit_test>"
+  }
+
 # It is also possible to import configuration files, relative to this
 # directory. For example, you can emulate configuration per environment
 # by uncommenting the line below and defining dev.exs, test.exs and such.

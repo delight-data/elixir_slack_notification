@@ -14,14 +14,13 @@ def deps do
 end
 ```
 
-## usage examples:
+## Typical usage:
 
-With:
 
 ```elixir
   SlackNotification.notify(
     :info,
-    "User `john@delight-data.com` created an account", 
+    "User `john@delight-data.com` created an account",
     %{id: "01D3KF1K6SSZBMKXQ5NGQGX23M"}
   )
 ```
@@ -48,7 +47,7 @@ You will receive:
 ### configuration:
 
 ```elixir
-config :slack_notification, url: get_env.("SLACK_WEBHOOK_URL")
+config :slack_notification, url: "https://hooks.slack.com/services/<yours>/<yours>/<yours>"
 ```
 
 to disable the actual push (in test environment for instance), you can disable it:
@@ -56,3 +55,32 @@ to disable the actual push (in test environment for instance), you can disable i
 ```elixir
 config :slack_notification, enabled: false
 ```
+
+## Multiple channel slack notifications
+
+
+```elixir
+  SlackNotification.notify_channel(
+    :com,
+    :info,
+    "Wonderful notification title",
+    %{
+      size: 12,
+      name: "george"
+    }
+  )
+```
+
+### configuration:
+
+```elixir
+config :slack_notification,
+  url: "https://hooks.slack.com/services/<yours>/<yours>/<yours>",
+  channels: %{
+    com: "https://hooks.slack.com/services/<yours>/<yours>/<yours>"
+  }
+```
+
+Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
+and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
+be found at [https://hexdocs.pm/slack_notification](https://hexdocs.pm/slack_notification).

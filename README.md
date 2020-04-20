@@ -9,7 +9,7 @@ Add to your list of dependencies in `mix.exs`:
 ```elixir
 def deps do
   [
-    {:slack_notification, git: "git://github.com/delight-data/elixir_slack_notification.git", tag: "v1.0.1"}
+    {:slack_notification, git: "git://github.com/delight-data/elixir_slack_notification.git", tag: "v1.2.0"}
   ]
 end
 ```

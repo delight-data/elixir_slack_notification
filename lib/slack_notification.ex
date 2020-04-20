@@ -2,9 +2,7 @@ defmodule SlackNotification do
   @moduledoc """
   Notify a map to a url webhook, asynchronously, fire and forget behavior
   """
-
-  use HTTPoison.Base
-
+  use Tesla
   require Logger
 
   @color %{
@@ -14,14 +12,9 @@ defmodule SlackNotification do
     success: "#0f0"
   }
 
-  # Fix SSL see: https://hexdocs.pm/httpoison/readme.html#note-about-broken-ssl-in-erlang-19
-  @default_options [ssl: [{:versions, [:"tlsv1.2"]}]]
+  plug(Tesla.Middleware.JSON)
 
   def config, do: Application.get_all_env(:slack_notification)
-
-  def process_request_headers(_headers), do: [{"Content-type", "application/json"}]
-  def process_request_options(options), do: options ++ @default_options
-  def process_request_body(body), do: body |> Poison.encode!()
 
   def notify!(url, attachments), do: if(config()[:enabled] != false, do: post(url, attachments))
 
@@ -33,7 +26,7 @@ defmodule SlackNotification do
       attachments: [
         %{
           color: @color[level] || "#f00",
-          ts: Timex.now() |> Timex.to_unix(),
+          ts: DateTime.utc_now() |> DateTime.to_unix(),
           fields: Enum.map(context, fn {k, v} -> %{title: k, value: inspect(v)} end)
         }
       ]
